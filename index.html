@@ -51,20 +51,19 @@ p{margin:0 0 14px}
 .treewrap{position:relative;width:min(340px,86vw);margin:0 auto}
 .treewrap .tree{width:100%}
 .treewrap 
-.orn{position:absolute;width:19%;aspect-ratio:1;margin-left:-9.5%;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% -40%;animation:swing 3.2s ease-in-out infinite alternate;-webkit-tap-highlight-color:transparent;z-index:2}
-.orn::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:40%;margin-left:-1px;background:#e8b94a}
-.orn .cap{position:absolute;left:37%;top:0;width:26%;height:15%;border-radius:3px 3px 1px 1px;background:linear-gradient(90deg,#b5832a,#f6d27a,#b5832a)}
-.orn .ball{position:absolute;inset:11% 0 0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9) 0 7%,transparent 24%),linear-gradient(transparent 44%,rgba(232,185,74,.9) 44% 52%,transparent 52%),radial-gradient(circle at 45% 40%,var(--c) 35%,var(--c2) 100%);box-shadow:0 6px 12px rgba(0,0,0,.4),inset -5px -7px 12px rgba(0,0,0,.25),0 0 18px var(--c);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s,filter .6s}
+.orn{position:absolute;width:21%;aspect-ratio:100/120;margin-left:-10.5%;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% -40%;animation:swing 3.2s ease-in-out infinite alternate;-webkit-tap-highlight-color:transparent;z-index:2}
+.orn::before{content:"";position:absolute;left:50%;bottom:96%;width:2px;height:30%;margin-left:-1px;background:linear-gradient(#e8b94a00,#e8b94a)}
+.orn svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45));transition:opacity .4s,filter .6s}
 .orn .lbl{position:absolute;top:108%;left:50%;transform:translateX(-50%);font:800 14px Nunito,sans-serif;color:#fff;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:99px;white-space:nowrap;opacity:0;transition:opacity .6s}
 .orn:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:50%}
 @keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
 .orn.shake{animation:shake .8s ease-in-out}
 @keyframes shake{0%,100%{transform:rotate(0)}15%{transform:rotate(-22deg) scale(1.08)}35%{transform:rotate(20deg) scale(1.12)}55%{transform:rotate(-16deg) scale(1.16)}75%{transform:rotate(12deg) scale(1.2)}}
-.orn.pop{animation:none}.orn.pop::before{opacity:.4}
-.orn.pop .ball,.orn.pop .cap{transform:scale(2);opacity:0}
-.orn.pop .lbl{opacity:1;background:var(--gold);color:#3a2905;font-size:15px}
+.orn.gone{animation:none}.orn.pop::before{opacity:.4}
+.orn.gone svg{opacity:0}
+.orn.gone.done .lbl{opacity:1;background:var(--gold);color:#3a2905;font-size:15px}
 .orn.other{animation-play-state:paused;cursor:default}
-.orn.other .ball{filter:saturate(.35) brightness(.8)}
+.orn.other svg{filter:saturate(.3) brightness(.7) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .orn.other.reveal .lbl{opacity:1}
 .picked .orn:not(.pop){cursor:default}
 .live{margin-top:34px;text-align:center}
@@ -85,6 +84,32 @@ p{margin:0 0 14px}
 .seat.fresh .b{animation:pop .7s cubic-bezier(.3,1.8,.5,1)}
 @keyframes pop{50%{transform:scale(1.3)}}
 .warn{background:#c8312b;color:#fff;border-radius:14px;padding:12px 16px;font-weight:700;text-align:center;margin:0 0 16px}
+.sheen{animation:sheen 5s ease-in-out infinite}
+@keyframes sheen{0%,55%{transform:translateX(-40px) skewX(-20deg)}100%{transform:translateX(150px) skewX(-20deg)}}
+.crack path{stroke-dasharray:140;stroke-dashoffset:140;transition:stroke-dashoffset 1.1s ease-in}
+.cracking .crack path{stroke-dashoffset:0}
+.stage{position:fixed;inset:0;z-index:3;opacity:0;pointer-events:none;transition:opacity .5s;background:radial-gradient(circle at 50% 45%,rgba(16,60,45,.92),rgba(4,18,13,.98))}
+.stage.on{opacity:1;pointer-events:auto}
+.flyer{position:fixed;transform-origin:0 0;transition:filter .8s}
+.flyer svg{width:100%;height:100%;display:block;overflow:visible}
+.flyer.cracking{filter:drop-shadow(0 0 14px rgba(255,212,94,.8)) drop-shadow(0 0 40px rgba(255,212,94,.6))}
+.flyer.shake1 svg{animation:bshake .16s linear infinite}
+.flyer.shake2 svg{animation:bshake2 .08s linear infinite}
+@keyframes bshake{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+@keyframes bshake2{0%,100%{transform:translate(0) rotate(0)}25%{transform:translate(-3px,1px) rotate(-7deg)}75%{transform:translate(3px,-1px) rotate(7deg)}}
+.flash{position:absolute;left:50%;top:45%;width:140px;height:140px;margin:-70px;border-radius:50%;background:radial-gradient(#fff,#fff3c4 30%,rgba(255,212,94,0) 70%);opacity:0}
+.stage.revealed .flash{animation:flash 1s ease-out forwards}
+@keyframes flash{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(8)}}
+.rays{position:absolute;left:50%;top:45%;width:160vmax;height:160vmax;margin:-80vmax;background:repeating-conic-gradient(rgba(255,212,94,.2) 0 5deg,transparent 5deg 15deg);-webkit-mask:radial-gradient(circle,#000,transparent 40%);mask:radial-gradient(circle,#000,transparent 40%);opacity:0;transition:opacity 1s}
+.stage.revealed .rays{opacity:1;animation:spin 24s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rname{position:absolute;left:0;right:0;top:45%;text-align:center;opacity:0;transform:translateY(-50%)}
+.stage.revealed .rname{animation:rise 1.1s cubic-bezier(.2,.8,.2,1.25) .2s forwards}
+@keyframes rise{from{opacity:0;transform:translateY(-30%) scale(.2)}to{opacity:1;transform:translateY(-50%) scale(1)}}
+.rname small{display:block;font:800 17px Nunito,sans-serif;color:#cfe3d7}
+.rname .big{font:400 clamp(66px,19vw,104px)/1.15 "Great Vibes",cursive;color:#ffd45e;text-shadow:0 0 28px rgba(255,212,94,.75),0 3px 0 #8a5a12;padding:0 10px}
+.stage .tap{position:absolute;bottom:10%;left:0;right:0;text-align:center;color:#cfe3d7;font-size:15px;opacity:0;transition:opacity .6s}
+.stage.revealed .tap{opacity:.85;transition-delay:1.6s}
 .holly{position:absolute;top:-22px;right:-10px;width:78px;transform:rotate(12deg)}
 /* Anhänger */
 .tag{position:relative;background:var(--card);color:var(--cardink);border-radius:18px 18px 18px 18px;padding:30px 24px 24px;margin:-40px auto 0;max-width:420px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35);transform:scale(.7) translateY(30px);opacity:0;transition:all .7s cubic-bezier(.2,.8,.2,1.3) .35s}
@@ -204,6 +229,8 @@ footer{text-align:center;font-size:13px;color:var(--soft);margin-top:34px}
   <h1>Hoppla</h1>
   <p class="lead">Dieser Wichtel-Link ist unvollständig. Bitte öffne ihn nochmal direkt aus der Nachricht, oder frag Phillip nach einem neuen.</p>
 </section>
+
+<div class="stage" id="stage"><div class="rays"></div><div class="flash"></div><div class="rname"><small>Dein Wichtelkind heuer</small><div class="big" id="bigname"></div></div><div class="tap">Tippen zum Weiter</div></div>
 
 <section id="live" class="live hidden">
   <h2>Wer hat schon gezogen?</h2>
@@ -339,14 +366,68 @@ function showReveal(x) {
 let cur = null, timers = [];
 const later = (f, ms) => timers.push(setTimeout(f, ms));
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const SPOTS = [[42, 31], [67, 46], [31, 60], [61, 71]];
-const COLS = [["#ff5146", "#8f1d1a"], ["#ffd45e", "#b5832a"], ["#59b8ff", "#1b4f8f"], ["#eef3f6", "#9aa9b3"]];
+const SPOTS = [[42, 29], [68, 45], [30, 58], [62, 70]];
+const COLS = [["#ff5146", "#7a1512"], ["#ffd45e", "#9a6a1c"], ["#4fb0ff", "#123f7a"], ["#e9eef2", "#7e8f9a"]];
+const KINDS = [0, 1, 2, 3];
+function ornSVG(i, [c1, c2], k) {
+  const id = "o" + i + Math.floor(Math.random() * 1e6);
+  const shape = k === 2 ? `<path d="M50 18 C78 40 88 72 76 98 C68 114 32 114 24 98 C12 72 22 40 50 18Z"/>`
+    : k === 3 ? `<path d="M50 17 C55 30 92 44 89 76 C87 102 67 115 50 115 C33 115 13 102 11 76 C8 44 45 30 50 17Z"/>`
+    : `<circle cx="50" cy="69" r="45"/>`;
+  const fillShape = (f, extra = "") => shape.replace("/>", ` fill="${f}" ${extra}/>`);
+  let pat = "";
+  if (k === 0) {
+    let arms = "";
+    for (let a = 0; a < 6; a++) arms += `<g transform="rotate(${a * 60} 50 69)"><line x1="50" y1="69" x2="50" y2="43"/><line x1="50" y1="52" x2="43" y2="46"/><line x1="50" y1="52" x2="57" y2="46"/><circle cx="50" cy="42" r="2.2" fill="#fff" stroke="none"/></g>`;
+    pat = `<g stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".9">${arms}</g>`;
+  } else if (k === 1) {
+    const star = (x, y, r) => { let d = ""; for (let j = 0; j < 10; j++) { const rr = j % 2 ? r * .45 : r, a = Math.PI / 5 * j - Math.PI / 2; d += (j ? "L" : "M") + (x + Math.cos(a) * rr).toFixed(1) + " " + (y + Math.sin(a) * rr).toFixed(1); } return `<path d="${d}Z" fill="url(#rb)"/>`; };
+    pat = `<rect x="0" y="48" width="100" height="7" fill="url(#rb)"/><rect x="0" y="84" width="100" height="7" fill="url(#rb)"/>` +
+      [10, 22, 34, 46, 58, 70, 82, 94].map(x => `<circle cx="${x}" cy="51.5" r="1.6" fill="#fff8"/><circle cx="${x}" cy="87.5" r="1.6" fill="#fff8"/>`).join("") +
+      star(30, 70, 7) + star(50, 70, 9) + star(70, 70, 7);
+  } else if (k === 2) {
+    pat = [16, 30, 44, 58, 72, 86].map((x, j) => `<path d="M${x} 10 Q${x + (j % 2 ? 8 : -8)} 65 ${x} 120" stroke="${j % 2 ? "#fff" : "#e8b94a"}" stroke-width="${j % 2 ? 2 : 4}" fill="none" opacity="${j % 2 ? .55 : .9}"/>`).join("");
+  } else {
+    let l = ""; for (let x = -60; x <= 120; x += 16) l += `<line x1="${x}" y1="10" x2="${x + 110}" y2="120"/><line x1="${x + 110}" y1="10" x2="${x}" y2="120"/>`;
+    pat = `<g stroke="#e8b94a" stroke-width="1.6" opacity=".85">${l}</g>` + [[50, 40], [34, 62], [66, 62], [50, 84], [26, 90], [74, 90], [50, 104]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4" fill="#fff"/>`).join("");
+  }
+  let glit = ""; for (let j = 0; j < 14; j++) glit += `<circle cx="${(12 + Math.random() * 76).toFixed(1)}" cy="${(28 + Math.random() * 84).toFixed(1)}" r="${(.6 + Math.random() * 1.2).toFixed(1)}" fill="#fff" opacity="${(.4 + Math.random() * .5).toFixed(2)}"/>`;
+  const cracks = `<g class="crack" fill="none" stroke="#fff8d6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 68 L42 56 L46 46 L38 34"/><path d="M50 68 L63 62 L70 50 L82 46"/><path d="M50 68 L58 80 L54 92 L62 106"/><path d="M50 68 L36 74 L30 88 L18 92"/><path d="M50 68 L47 82 L40 90"/></g>`;
+  return `<svg viewBox="0 0 100 120" aria-hidden="true"><defs>
+    <radialGradient id="${id}g" cx=".36" cy=".38" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".18" stop-color="${c1}"/><stop offset=".7" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient>
+    <radialGradient id="${id}s" cx=".7" cy=".8" r=".7"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="${id}w" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="${id}c">${shape}</clipPath></defs>
+    <circle cx="50" cy="8" r="5" fill="none" stroke="#d9a63c" stroke-width="2.5"/>
+    ${fillShape(`url(#${id}g)`)}
+    <g clip-path="url(#${id}c)">${pat}${glit}${fillShape(`url(#${id}s)`)}<rect class="sheen" x="-10" y="0" width="22" height="120" fill="url(#${id}w)"/></g>
+    ${fillShape("none", 'stroke="rgba(255,255,255,.35)" stroke-width="1.5"')}
+    <ellipse cx="33" cy="${k === 2 ? 52 : 50}" rx="8" ry="15" transform="rotate(28 33 50)" fill="#fff" opacity=".45"/>
+    <circle cx="30" cy="${k === 2 ? 44 : 42}" r="3" fill="#fff" opacity=".9"/>
+    ${cracks}
+    <rect x="39" y="${k === 0 || k === 1 ? 17 : 13}" width="22" height="11" rx="2" fill="url(#rb)" stroke="#9a6a1c" stroke-width=".8"/>
+    <path d="M42 ${k < 2 ? 19 : 15}v7M46 ${k < 2 ? 19 : 15}v7M50 ${k < 2 ? 19 : 15}v7M54 ${k < 2 ? 19 : 15}v7M58 ${k < 2 ? 19 : 15}v7" stroke="#9a6a1c" stroke-width=".8" opacity=".6"/>
+  </svg>`;
+}
 function buildOrns() {
   timers.forEach(clearTimeout); timers = [];
   const box = $("#orns"); box.className = "";
-  box.innerHTML = SPOTS.map(([x, y], i) => `<button class="orn" style="left:${x}%;top:${y}%;--c:${COLS[i][0]};--c2:${COLS[i][1]};animation-delay:${-i * .8}s" aria-label="Christbaumkugel ${i + 1}"><span class="cap"></span><span class="ball"></span><span class="lbl"></span></button>`).join("");
+  const order = KINDS.slice().sort(() => Math.random() - .5);
+  box.innerHTML = SPOTS.map(([x, y], i) => `<button class="orn" style="left:${x}%;top:${y}%;animation-delay:${-i * .8}s" aria-label="Christbaumkugel ${i + 1}">${ornSVG(i, COLS[order[i]], order[i])}<span class="lbl"></span></button>`).join("");
+  box.querySelectorAll(".sheen").forEach((r, i) => r.style.animationDelay = (i * 1.1) + "s");
   $("#tag").classList.remove("show", "done");
+  $("#stage").className = "stage"; $("#stage").onclick = null; $("#stage").querySelectorAll(".flyer").forEach(f => f.remove());
   $("#hint").textContent = "Welche Kugel nimmst du?";
+}
+function finishReveal(btn, others) {
+  const st = $("#stage");
+  if (st.dataset.closing) return; st.dataset.closing = "1"; st.onclick = null;
+  st.classList.remove("on");
+  later(() => { st.className = "stage"; delete st.dataset.closing; st.querySelectorAll(".flyer").forEach(f => f.remove()); }, 600);
+  btn.classList.add("done");
+  others.forEach(o => o.classList.add("other"));
+  later(() => { const t = $("#tag"); t.classList.add("show", "done"); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }, 300);
+  later(() => others.forEach((o, i) => later(() => o.classList.add("reveal"), i * 300)), 1800);
 }
 function pickOrn(btn) {
   const box = $("#orns");
@@ -357,13 +438,33 @@ function pickOrn(btn) {
   btn.querySelector(".lbl").textContent = N[cur.t];
   others.forEach((o, i) => { o.querySelector(".lbl").textContent = N[rest[i]]; });
   $("#hint").textContent = "";
-  btn.classList.add("shake");
+  $("#who").textContent = N[cur.t]; $("#bigname").textContent = N[cur.t];
+  WL.call("markDrawn", slug(N[cur.g]), dname(cur.d));
+  if (reduce) { btn.classList.add("gone"); finishReveal(btn, others); return; }
+  const st = $("#stage"), r = btn.getBoundingClientRect();
+  const fl = document.createElement("div"); fl.className = "flyer";
+  fl.innerHTML = btn.querySelector("svg").outerHTML;
+  Object.assign(fl.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
+  st.appendChild(fl); st.classList.add("on"); btn.classList.add("gone");
+  const sc = Math.min(200, innerWidth * .5) / r.width, cxp = innerWidth / 2, cyp = innerHeight * .45;
+  const dx = cxp - r.width * sc / 2 - r.left, dy = cyp - r.height * sc / 2 - r.top;
+  fl.animate([
+    { transform: "translate(0,0) scale(1) rotate(0)" },
+    { transform: `translate(${dx * .5}px,${dy * .5 - 60}px) scale(${sc * .7}) rotate(-10deg)`, offset: .55 },
+    { transform: `translate(${dx}px,${dy}px) scale(${sc}) rotate(0)` }
+  ], { duration: 1100, easing: "cubic-bezier(.3,.7,.2,1)", fill: "forwards" });
+  later(() => fl.classList.add("shake1"), 1150);
+  later(() => fl.classList.add("cracking"), 1300);
+  later(() => { fl.classList.remove("shake1"); fl.classList.add("shake2"); }, 2000);
   later(() => {
-    btn.classList.remove("shake"); btn.classList.add("pop"); burst(btn); WL.call("markDrawn", slug(N[cur.g]), dname(cur.d)); others.forEach(o => o.classList.add("other"));
-    $("#who").textContent = N[cur.t];
-    later(() => { const t = $("#tag"); t.classList.add("show", "done"); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }, 500);
-    later(() => others.forEach((o, i) => later(() => o.classList.add("reveal"), i * 250)), 2200);
-  }, reduce ? 0 : 800);
+    fl.animate([{ transform: `translate(${dx}px,${dy}px) scale(${sc})`, opacity: 1 }, { transform: `translate(${dx}px,${dy}px) scale(${sc * 1.25})`, opacity: 0 }], { duration: 160, fill: "forwards" });
+    const col = COLS[[...box.querySelectorAll(".orn")].indexOf(btn)] || COLS[0];
+    const svgc = btn.querySelector("radialGradient stop:nth-child(2)"); const c1 = svgc ? svgc.getAttribute("stop-color") : col[0];
+    shatter(cxp, cyp, c1);
+    st.classList.add("revealed");
+  }, 2700);
+  later(() => { st.onclick = () => finishReveal(btn, others); }, 3300);
+  later(() => finishReveal(btn, others), 7000);
 }
 function bindReveal() {
   $("#orns").addEventListener("click", e => { const b = e.target.closest(".orn"); if (b) pickOrn(b); });
@@ -407,6 +508,16 @@ const size = () => { const dpr = devicePixelRatio || 1; W = innerWidth; H = inne
 const ro = new ResizeObserver(size); ro.observe(document.body);
 size();
 for (let i = 0; i < 130; i++) flakes.push({ x: Math.random() * W, y: Math.random() * H, r: 1 + Math.random() * 3.2, s: .3 + Math.random() * .9, w: Math.random() * 6 });
+function shatter(x, y, c1) {
+  const cc = [c1, c1, "#ffffff", "#ffd45e"];
+  for (let i = 0; i < 46; i++) {
+    const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 9, sz = 6 + Math.random() * 14;
+    const pts = [0, 1, 2].map(j => { const aa = j * 2.1 + Math.random() * .8; return [Math.cos(aa) * sz * (.5 + Math.random() * .6), Math.sin(aa) * sz * (.5 + Math.random() * .6)]; });
+    sparks.push({ shard: 1, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, pts, c: cc[i % 4], l: 110 + Math.random() * 50 });
+  }
+  const gl = ["#ffd45e", "#fff", "#fff3c4"];
+  for (let i = 0; i < 180; i++) { const a = Math.random() * Math.PI * 2, v = 1 + Math.random() * 11; sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 3, l: 70 + Math.random() * 90, c: gl[i % 3], w: 2 + Math.random() * 3, rot: Math.random() * 6 }); }
+}
 function burst(el) {
   const b = (el || $("#tag")).getBoundingClientRect(), ox = b.left + b.width / 2, oy = b.top + b.height / 2;
   const cc = ["#e8b94a", "#ffd45e", "#fff", "#ff4a3d", "#5be37d", "#5ab8ff"];
@@ -422,7 +533,10 @@ function tick(t) {
     cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 7); cx.fill();
   }
   sparks = sparks.filter(p => p.l-- > 0);
-  for (const p of sparks) { p.x += p.vx; p.y += p.vy; p.vy += .12; cx.globalAlpha = Math.min(1, p.l / 40); cx.fillStyle = p.c; p.vx *= .985; p.rot += .2; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.fillRect(-(p.w||3) / 2, -1.5, p.w || 3, 3); cx.restore(); }
+  for (const p of sparks) { p.x += p.vx; p.y += p.vy; p.vy += .12; cx.globalAlpha = Math.min(1, p.l / 40); cx.fillStyle = p.c; p.vx *= .985; cx.save(); cx.translate(p.x, p.y);
+    if (p.shard) { p.rot += p.vr; cx.rotate(p.rot); cx.beginPath(); p.pts.forEach(([a, b], j) => j ? cx.lineTo(a, b) : cx.moveTo(a, b)); cx.closePath(); cx.fill(); cx.strokeStyle = "rgba(255,255,255,.7)"; cx.lineWidth = 1; cx.stroke(); }
+    else { p.rot += .2; cx.rotate(p.rot); cx.fillRect(-(p.w || 3) / 2, -1.5, p.w || 3, 3); }
+    cx.restore(); }
   cx.globalAlpha = 1;
   requestAnimationFrame(tick);
 }
