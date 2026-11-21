@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Familienwichteln 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Great+Vibes&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, verschmitzt, familiär – ein Geheimnis unterm Christbaum
+   IDEA: ein Geschenkanhänger / Wichtellos, das man selbst auspackt
+   PICTURE: großes rotes Geschenk mit goldener Masche, Deckel fliegt beim Tippen auf
+   COLOUR and TYPE: Tannengrün-Fläche, Kirschrot, Gold als Akzent, Schneeweiß; Fraunces + Nunito
+   LAYOUT: eine Spalte, Bild in der Mitte, Anhänger-Karten als Liste */
+:root{color-scheme:light dark;
+--bg:light-dark(#0f3b2e,#0a2a21);--bg2:light-dark(#14503e,#0f3a2d);
+--ink:#fbf7ee;--soft:light-dark(#cfe3d7,#a9c7b6);
+--red:#c8312b;--red2:#8f1d1a;--gold:#e8b94a;--gold2:#b5832a;
+--card:#fbf7ee;--cardink:#1d2b24}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{min-height:100%}
+body{margin:0;background:radial-gradient(120% 70% at 50% 0%,var(--bg2),var(--bg) 60%);background-color:var(--bg);color:var(--ink);font:17px/1.55 Nunito,system-ui,sans-serif;overflow-x:clip}
+#snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:clamp(70px,10vw,110px) max(5vw,18px) 56px}
+h1{font:400 clamp(46px,12vw,68px)/1.05 "Great Vibes",Fraunces,cursive;margin:0 0 10px;text-wrap:balance;text-align:center;text-shadow:0 2px 18px rgba(232,185,74,.35)}
+.lead{text-align:center}
+h2{font:600 24px/1.2 Fraunces,Georgia,serif;margin:0 0 10px}
+p{margin:0 0 14px}
+.lead{color:var(--soft);font-size:18px}
+.gold{color:var(--gold)}
+.hidden{display:none!important}
+/* Geschenk */
+.gift{display:block;margin:18px auto 6px;width:min(300px,78vw);background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.gift svg{width:100%;height:auto;overflow:visible;display:block}
+.gift:focus-visible{outline:3px solid var(--gold);outline-offset:8px;border-radius:16px}
+.lid{transform-box:fill-box;transform-origin:50% 100%;transition:transform .9s cubic-bezier(.2,.8,.2,1.2),opacity .9s}
+.open .lid{transform:translate(70px,-150px) rotate(24deg);opacity:0}
+.gift:not(.open) .box{animation:wiggle 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes wiggle{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-3deg)}90%{transform:rotate(3deg)}95%{transform:rotate(-2deg)}}
+.hint{text-align:center;min-height:1.6em;position:relative;z-index:1;margin-top:24px!important;color:var(--soft);font-weight:600;margin-top:6px}
+.garland{position:absolute;top:0;left:0;right:0;height:84px;z-index:2;pointer-events:none}
+.garland svg{width:100%;height:100%;display:block}
+.bulb{animation:tw 1.6s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:1}to{opacity:.35}}
+.scene{position:relative;margin:8px auto 0;max-width:380px}
+.tree{display:block;width:min(250px,64vw);margin:0 auto;overflow:visible}
+.star{transform-box:fill-box;transform-origin:center;animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 6px #ffd96a)}50%{filter:drop-shadow(0 0 16px #ffe9a8)}}
+.drift{position:absolute;left:-6%;right:-6%;bottom:-14px;height:46px;background:radial-gradient(60% 100% at 30% 100%,#fff 60%,transparent 61%),radial-gradient(55% 90% at 75% 100%,#f1f6f8 60%,transparent 61%);opacity:.95;z-index:0}
+.treewrap{position:relative;width:min(340px,86vw);margin:0 auto}
+.treewrap .tree{width:100%}
+.treewrap 
+.orn{position:absolute;width:19%;aspect-ratio:1;margin-left:-9.5%;border:0;padding:0;background:none;cursor:pointer;transform-origin:50% -40%;animation:swing 3.2s ease-in-out infinite alternate;-webkit-tap-highlight-color:transparent;z-index:2}
+.orn::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:40%;margin-left:-1px;background:#e8b94a}
+.orn .cap{position:absolute;left:37%;top:0;width:26%;height:15%;border-radius:3px 3px 1px 1px;background:linear-gradient(90deg,#b5832a,#f6d27a,#b5832a)}
+.orn .ball{position:absolute;inset:11% 0 0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.9) 0 7%,transparent 24%),linear-gradient(transparent 44%,rgba(232,185,74,.9) 44% 52%,transparent 52%),radial-gradient(circle at 45% 40%,var(--c) 35%,var(--c2) 100%);box-shadow:0 6px 12px rgba(0,0,0,.4),inset -5px -7px 12px rgba(0,0,0,.25),0 0 18px var(--c);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s,filter .6s}
+.orn .lbl{position:absolute;top:108%;left:50%;transform:translateX(-50%);font:800 14px Nunito,sans-serif;color:#fff;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:99px;white-space:nowrap;opacity:0;transition:opacity .6s}
+.orn:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:50%}
+@keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.orn.shake{animation:shake .8s ease-in-out}
+@keyframes shake{0%,100%{transform:rotate(0)}15%{transform:rotate(-22deg) scale(1.08)}35%{transform:rotate(20deg) scale(1.12)}55%{transform:rotate(-16deg) scale(1.16)}75%{transform:rotate(12deg) scale(1.2)}}
+.orn.pop{animation:none}.orn.pop::before{opacity:.4}
+.orn.pop .ball,.orn.pop .cap{transform:scale(2);opacity:0}
+.orn.pop .lbl{opacity:1;background:var(--gold);color:#3a2905;font-size:15px}
+.orn.other{animation-play-state:paused;cursor:default}
+.orn.other .ball{filter:saturate(.35) brightness(.8)}
+.orn.other.reveal .lbl{opacity:1}
+.picked .orn:not(.pop){cursor:default}
+.live{margin-top:34px;text-align:center}
+.live h2{font:400 clamp(34px,9vw,44px)/1.1 "Great Vibes",Fraunces,cursive;color:var(--gold);margin-bottom:4px}
+.conn{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--soft);margin:0 0 14px}
+.conn .dot{width:9px;height:9px;border-radius:50%;background:#9aa9b3}
+.conn.on .dot{background:#5be37d;box-shadow:0 0 8px #5be37d;animation:tw 1s ease-in-out infinite alternate}
+.conn.err .dot{background:#ff5146}
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(232,185,74,.3);border-radius:18px;padding:22px 10px 16px}
+.seat{display:grid;justify-items:center;gap:4px}
+.seat .b{position:relative;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35) 0 10%,transparent 30%),#3d5a4d;box-shadow:inset -4px -6px 10px rgba(0,0,0,.3);display:grid;place-items:center;color:transparent;font:800 22px Nunito;transition:all .6s}
+.seat .b::before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:8px;margin-left:-7px;border-radius:2px;background:#8a9b92}
+.seat.ok .b{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.8) 0 10%,transparent 30%),radial-gradient(circle at 45% 40%,#ffd45e 35%,#b5832a);box-shadow:0 0 18px rgba(255,212,94,.7),inset -4px -6px 10px rgba(0,0,0,.2);color:#5a3d06}
+.seat.ok .b::before{background:linear-gradient(90deg,#b5832a,#f6d27a,#b5832a)}
+.seat .n{font-weight:800;font-size:15px}
+.seat .t{font-size:13px;color:var(--soft)}
+.seat.ok .t{color:var(--gold)}
+.seat.fresh .b{animation:pop .7s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{50%{transform:scale(1.3)}}
+.warn{background:#c8312b;color:#fff;border-radius:14px;padding:12px 16px;font-weight:700;text-align:center;margin:0 0 16px}
+.holly{position:absolute;top:-22px;right:-10px;width:78px;transform:rotate(12deg)}
+/* Anhänger */
+.tag{position:relative;background:var(--card);color:var(--cardink);border-radius:18px 18px 18px 18px;padding:30px 24px 24px;margin:-40px auto 0;max-width:420px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35);transform:scale(.7) translateY(30px);opacity:0;transition:all .7s cubic-bezier(.2,.8,.2,1.3) .35s}
+.tag.show{transform:none;opacity:1}
+.tag::before{content:"";position:absolute;top:12px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 3px var(--gold2)}
+.tag small{display:block;font-weight:800;color:#5d6d64;margin-top:8px}
+.tag .who{font:800 clamp(40px,11vw,58px)/1.05 Fraunces,Georgia,serif;color:var(--red);margin:6px 0 4px}
+.meta{font-size:14px;color:#5d6d64}
+/* Organisator */
+.rules{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:8px}
+.rules li{padding-left:30px;position:relative}
+.rules li::before{content:"";position:absolute;left:4px;top:.45em;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff8,transparent 40%),var(--red);box-shadow:0 0 0 2px var(--gold)}
+.pairs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 26px}
+.pair{background:rgba(255,255,255,.07);border:1px solid rgba(232,185,74,.35);border-radius:14px;padding:12px 10px;text-align:center;font-weight:800;line-height:1.3}
+.pair span{display:block;font-weight:600;color:var(--soft);font-size:13px}
+@media(max-width:420px){.pairs{grid-template-columns:minmax(0,1fr)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:0;font:800 17px Nunito,sans-serif;cursor:pointer;text-decoration:none;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.primary{background:linear-gradient(var(--red),var(--red2));color:#fff;box-shadow:0 6px 0 #5e1210,0 10px 24px rgba(0,0,0,.3);width:100%;font-size:19px;min-height:58px}
+.ghost{background:transparent;color:var(--ink);border:2px solid rgba(255,255,255,.35)}
+.small{min-height:44px;padding:0 16px;font-size:15px}
+.wa{background:#25d366;color:#0b3d22}
+.cp{background:var(--gold);color:#3a2905}
+.list{display:grid;gap:12px;margin:22px 0}
+.row{background:var(--card);color:var(--cardink);border-radius:14px;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.row b{font:800 20px Fraunces,Georgia,serif;flex:1 1 120px}
+.row.sent{opacity:.6}
+.row label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;width:100%;cursor:pointer}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:var(--red)}
+.row .lnk{width:100%;font:13px ui-monospace,monospace;padding:8px;border:1px solid #ccc;border-radius:8px;display:none}
+.row .lnk.on{display:block}
+.note{font-size:14px;color:var(--soft)}
+details{background:rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;margin-top:22px}
+summary{cursor:pointer;font-weight:800;min-height:28px}
+details p{margin:10px 0 0;color:var(--soft)}
+.err{text-align:center;padding-top:40px}
+footer{text-align:center;font-size:13px;color:var(--soft);margin-top:34px}
+@media(prefers-reduced-motion:reduce){.bulb,#snow{display:none}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+        <linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#e0443c"/><stop offset=".55" stop-color="#c8312b"/><stop offset="1" stop-color="#8f1d1a"/></linearGradient>
+        <linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#ef5a50"/><stop offset="1" stop-color="#a4241f"/></linearGradient>
+        <linearGradient id="rb" x1="0" x2="1"><stop offset="0" stop-color="#f6d27a"/><stop offset=".5" stop-color="#e8b94a"/><stop offset="1" stop-color="#b5832a"/></linearGradient>
+      <linearGradient id="tg" x1="0" x2="1"><stop offset="0" stop-color="#2f8a5a"/><stop offset=".5" stop-color="#1f6b45"/><stop offset="1" stop-color="#124530"/></linearGradient></defs></svg>
+<canvas id="snow"></canvas>
+<div class="garland" id="garland"></div>
+<main>
+
+<!-- Ansicht: persönliches Los -->
+<section id="reveal" class="hidden">
+  <h1 id="hello">Psst …</h1>
+  <p class="warn hidden" id="oldlink">Achtung: Dieser Link ist von einer älteren Ziehung und gilt nicht mehr. Frag Phillip nach deinem neuen Link.</p>
+  <p class="lead" id="sub">Am Christbaum hängen vier Kugeln – in jeder steckt jemand aus der Familie. Schau, dass dir keiner über die Schulter schaut.</p>
+  <div class="scene"><div class="treewrap" id="treewrap"><svg class="tree" viewBox="0 0 260 300" aria-hidden="true">
+  
+  <rect x="116" y="250" width="28" height="40" rx="4" fill="#6b3d22"/>
+  <path d="M130 150 L235 262 Q130 278 25 262Z" fill="url(#tg)"/>
+  <path d="M130 95 L210 192 Q130 206 50 192Z" fill="url(#tg)"/>
+  <path d="M130 42 L182 125 Q130 136 78 125Z" fill="url(#tg)"/>
+  <path d="M60 188 Q130 214 205 176 M45 252 Q130 280 222 238 M92 122 Q135 140 176 112" stroke="#e8b94a" stroke-width="2.5" fill="none" stroke-dasharray="1 7" stroke-linecap="round"/>
+  
+  <path class="star" d="M130 8 l8 17 18 2 -13 12 4 18 -17 -9 -17 9 4 -18 -13 -12 18 -2z" fill="#ffd45e" stroke="#c9952e" stroke-width="1.5"/>
+</svg><div id="orns"></div></div><div class="drift"></div></div>
+  <p class="hint" id="hint">Welche Kugel nimmst du?</p>
+  <div class="tag" id="tag" aria-live="polite">
+    <svg class="holly" viewBox="0 0 80 60" aria-hidden="true"><path d="M8 30 C14 18 26 22 30 12 C34 22 44 20 40 32 C46 36 40 44 34 40 C30 48 20 46 22 38 C12 42 6 36 8 30Z" fill="#1f6b45"/><path d="M40 28 C48 16 60 22 66 12 C68 24 78 26 72 36 C76 44 66 46 62 40 C56 48 46 42 50 36 C42 36 38 32 40 28Z" fill="#2f8a5a"/><circle cx="38" cy="34" r="6" fill="#c8312b"/><circle cx="46" cy="40" r="6" fill="#a4241f"/><circle cx="32" cy="42" r="5.5" fill="#d83a33"/><circle cx="36" cy="32" r="2" fill="#fff" opacity=".6"/></svg>
+    <small>Dein Wichtelkind heuer</small>
+    <div class="who" id="who"></div>
+    <p class="meta after" id="drawinfo"></p>
+    <button class="btn ghost small after" id="close" style="color:var(--cardink);border-color:#c9c2b2">Wieder verstecken</button>
+  </div>
+  <details>
+    <summary>Dir fällt gar nix ein?</summary>
+    <p>Einmal darf zurückgegeben werden. Sag Phillip Bescheid – dann wird für alle neu gelost und jede/r bekommt einen neuen Link. Es gilt immer die neueste Ziehung (siehe Ziehungs-Nr. am Anhänger).</p>
+  </details>
+  <details>
+    <summary>Die Regeln</summary>
+    <p>Niemand zieht sich selbst oder den eigenen Partner. Und vor allem: Wer wen hat, bleibt bis zur Bescherung streng geheim.</p>
+  </details>
+</section>
+
+<!-- Ansicht: Losmaschine für Phillip -->
+<section id="admin" class="hidden">
+  <h1>Familien&shy;wichteln <span class="gold">2026</span></h1>
+  <div class="scene" style="margin-bottom:18px"><svg class="tree" style="width:min(190px,50vw)" viewBox="0 0 260 300" aria-hidden="true">
+  
+  <rect x="116" y="250" width="28" height="40" rx="4" fill="#6b3d22"/>
+  <path d="M130 150 L235 262 Q130 278 25 262Z" fill="url(#tg)"/>
+  <path d="M130 95 L210 192 Q130 206 50 192Z" fill="url(#tg)"/>
+  <path d="M130 42 L182 125 Q130 136 78 125Z" fill="url(#tg)"/>
+  <path d="M60 188 Q130 214 205 176 M45 252 Q130 280 222 238 M92 122 Q135 140 176 112" stroke="#e8b94a" stroke-width="2.5" fill="none" stroke-dasharray="1 7" stroke-linecap="round"/>
+  <g class="baubles"></g>
+  <path class="star" d="M130 8 l8 17 18 2 -13 12 4 18 -17 -9 -17 9 4 -18 -13 -12 18 -2z" fill="#ffd45e" stroke="#c9952e" stroke-width="1.5"/>
+</svg></div>
+  <p class="lead">Die Lose werden hier auf deinem Handy gezogen – du siehst dabei keinen einzigen Namen. Du bekommst nur sechs persönliche Links zum Verschicken.</p>
+  <ul class="rules">
+    <li>Niemand zieht sich selbst</li>
+    <li>Niemand zieht den eigenen Partner</li>
+    <li>Einmal zurückgeben ist erlaubt – dann einfach neu ziehen</li>
+    <li>Streng vertraulich: jede/r öffnet nur den eigenen Link</li>
+  </ul>
+  <div class="pairs" id="pairs"></div>
+  <button class="btn primary" id="draw">Lose ziehen</button>
+  <div id="out" class="hidden">
+    <h2 style="margin-top:30px">Ziehung <span class="gold" id="did"></span> – jetzt verschicken</h2>
+    <p class="note">Tipp auf WhatsApp, wähl die Person aus, fertig. Öffne nur deinen eigenen Link.</p>
+    <div class="list" id="list"></div>
+    <button class="btn ghost" id="redo">Neu ziehen</button>
+    <p class="note" id="redowarn" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<section id="bad" class="hidden err">
+  <h1>Hoppla</h1>
+  <p class="lead">Dieser Wichtel-Link ist unvollständig. Bitte öffne ihn nochmal direkt aus der Nachricht, oder frag Phillip nach einem neuen.</p>
+</section>
+
+<section id="live" class="live hidden">
+  <h2>Wer hat schon gezogen?</h2>
+  <p class="conn" id="conn"><span class="dot"></span><span id="conntxt">Verbinde …</span></p>
+  <div class="board" id="board"></div>
+</section>
+
+<footer><span style="font:400 30px 'Great Vibes',cursive;color:var(--gold)">Frohe Weihnachten</span><br>Familienwichteln 2026</footer>
+</main>
+
+<script>
+{
+const BASE = location.origin + location.pathname;
+const N = ["Phillip","Isabella","Nina","Wolfgang","Charly","Helga"];
+const A = "0123456789abcdefghijklmnopqrstuvwxyz";
+const $ = s => document.querySelector(s);
+const slug = n => n.toLowerCase();
+const partner = i => i ^ 1;
+
+const rng = seed => { let s = seed >>> 0; return () => (s = (Math.imul(s, 1103515245) + 12345) >>> 0) / 4294967296; };
+const p2 = n => n.toString(36).padStart(2, "0");
+
+function encode(g, t, d) {
+  const salt = Math.floor(Math.random() * 1296);
+  const r = rng(salt * 7919 + 17);
+  const kd = Math.floor(r() * 1296), kg = Math.floor(r() * 36), kt = Math.floor(r() * 36), kc = Math.floor(r() * 36);
+  const chk = (g * 7 + t * 13 + d * 3 + salt) % 36;
+  return slug(N[g]) + "-" + p2(salt) + p2((d + kd) % 1296) + A[(g + kg) % 36] + A[(t + kt) % 36] + A[(chk + kc) % 36];
+}
+function decode(h) {
+  const m = /^([a-z]+)-([0-9a-z]{7})$/.exec(h);
+  if (!m) return null;
+  const c = m[2], salt = parseInt(c.slice(0, 2), 36);
+  const r = rng(salt * 7919 + 17);
+  const kd = Math.floor(r() * 1296), kg = Math.floor(r() * 36), kt = Math.floor(r() * 36), kc = Math.floor(r() * 36);
+  const d = (parseInt(c.slice(2, 4), 36) - kd + 1296) % 1296;
+  const g = (A.indexOf(c[4]) - kg + 36) % 36, t = (A.indexOf(c[5]) - kt + 36) % 36;
+  const chk = (A.indexOf(c[6]) - kc + 36) % 36;
+  if (g >= N.length || t >= N.length || g === t || t === partner(g)) return null;
+  if (slug(N[g]) !== m[1] || chk !== (g * 7 + t * 13 + d * 3 + salt) % 36) return null;
+  return { g, t, d };
+}
+function drawAll() {
+  for (let k = 0; k < 5000; k++) {
+    const p = N.map((_, i) => i);
+    for (let i = p.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+    if (p.every((t, g) => t !== g && t !== partner(g))) return p;
+  }
+  return null;
+}
+const dname = d => d.toString(36).toUpperCase().padStart(2, "0");
+
+/* ---- Live-Status (Firebase-Brücke) ---- */
+const WL = window.wichtel = { q: [], call(f, ...a) { this[f + "_"] ? this[f + "_"](...a) : this.q.push([f, a]); } };
+let liveDraw = null, liveStatus = {}, seen = new Set(), firstRender = true;
+WL.ready = () => { WL.q.forEach(([f, a]) => WL[f + "_"](...a)); WL.q = []; };
+WL.liveError = e => { console.error(e); const c = $("#conn"); c.className = "conn err"; $("#conntxt").textContent = "Keine Live-Verbindung"; };
+WL.renderStatus = (status, drawId) => {
+  liveDraw = drawId; liveStatus = status;
+  $("#conn").className = "conn on";
+  let n = 0;
+  $("#board").innerHTML = N.map(name => {
+    const st = status[slug(name)], ok = !!(drawId && st && st.d === drawId);
+    if (ok) n++;
+    const at = ok && st.at && st.at.toDate ? st.at.toDate() : null;
+    const t = ok ? (at ? at.toLocaleString("de-AT", { weekday: "short", hour: "2-digit", minute: "2-digit" }) + " Uhr" : "gerade eben") : "noch nicht";
+    const fresh = ok && !firstRender && !seen.has(name);
+    if (ok) seen.add(name);
+    return `<div class="seat${ok ? " ok" : ""}${fresh ? " fresh" : ""}"><div class="b">${ok ? "✓" : ""}</div><div class="n">${name}</div><div class="t">${t}</div></div>`;
+  }).join("");
+  firstRender = false;
+  $("#conntxt").textContent = drawId ? `Live · ${n} von ${N.length} haben gezogen` : "Live · noch nicht ausgelost";
+  if (cur) $("#oldlink").classList.toggle("hidden", !drawId || drawId === dname(cur.d));
+};
+
+/* ---- Losmaschine ---- */
+let state = null;
+const save = () => { try { localStorage.setItem("wichteln26", JSON.stringify(state)); } catch (e) {} };
+const load = () => { try { return JSON.parse(localStorage.getItem("wichteln26")); } catch (e) { return null; } };
+
+function renderAdmin() {
+  $("#pairs").innerHTML = [0, 2, 4].map(i => `<div class="pair">${N[i]}<span>&amp;</span>${N[i + 1]}</div>`).join("");
+  if (!state) { $("#out").classList.add("hidden"); $("#draw").classList.remove("hidden"); return; }
+  $("#draw").classList.add("hidden");
+  $("#out").classList.remove("hidden");
+  $("#did").textContent = dname(state.d);
+  $("#list").innerHTML = state.tokens.map((tk, g) => {
+    const url = BASE + "#" + tk;
+    const msg = `Hallo ${N[g]}! 🎄🎁 Hier ist dein geheimes Wichtellos für Weihnachten – nur für dich, nicht weitersagen 🤫\n${url}`;
+    return `<div class="row${state.sent[g] ? " sent" : ""}" data-g="${g}">
+      <b>${N[g]}</b>
+      <a class="btn small wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="btn small cp" data-copy="${g}">Link kopieren</button>
+      <input class="lnk" readonly value="${url}" aria-label="Link für ${N[g]}">
+      <label><input type="checkbox" data-sent="${g}"${state.sent[g] ? " checked" : ""}> verschickt</label>
+    </div>`;
+  }).join("");
+}
+function newDraw() {
+  const p = drawAll();
+  const d = Math.floor(Math.random() * 1296);
+  state = { d, tokens: p.map((t, g) => encode(g, t, d)), sent: N.map(() => false) };
+  save(); renderAdmin();
+  WL.call("setDraw", dname(d));
+}
+let redoArmed = false;
+function bindAdmin() {
+  $("#draw").addEventListener("click", newDraw);
+  $("#redo").addEventListener("click", () => {
+    if (!redoArmed) { redoArmed = true; $("#redo").textContent = "Wirklich neu ziehen?"; $("#redowarn").textContent = "Dann gelten alle bisherigen Links nicht mehr – alle sechs brauchen einen neuen."; return; }
+    redoArmed = false; $("#redo").textContent = "Neu ziehen"; $("#redowarn").textContent = ""; newDraw();
+  });
+  $("#list").addEventListener("click", e => {
+    const b = e.target.closest("[data-copy]"); if (!b) return;
+    const row = b.closest(".row"), inp = row.querySelector(".lnk");
+    const done = () => { b.textContent = "Kopiert ✓"; setTimeout(() => b.textContent = "Link kopieren", 1800); };
+    const fallback = () => { inp.classList.add("on"); inp.focus(); inp.select(); b.textContent = "Markiert – kopieren"; };
+    try { navigator.clipboard.writeText(inp.value).then(done, fallback); } catch (err) { fallback(); }
+  });
+  $("#list").addEventListener("change", e => {
+    const c = e.target.closest("[data-sent]"); if (!c) return;
+    state.sent[+c.dataset.sent] = c.checked; save();
+    c.closest(".row").classList.toggle("sent", c.checked);
+  });
+}
+
+/* ---- Persönliches Los ---- */
+function showReveal(x) {
+  $("#hello").innerHTML = `Psst, <span class="gold">${N[x.g]}</span> …`;
+  cur = x;
+  $("#drawinfo").textContent = `Ziehung ${dname(x.d)} · bis zur Bescherung geheim halten`;
+}
+let cur = null, timers = [];
+const later = (f, ms) => timers.push(setTimeout(f, ms));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SPOTS = [[42, 31], [67, 46], [31, 60], [61, 71]];
+const COLS = [["#ff5146", "#8f1d1a"], ["#ffd45e", "#b5832a"], ["#59b8ff", "#1b4f8f"], ["#eef3f6", "#9aa9b3"]];
+function buildOrns() {
+  timers.forEach(clearTimeout); timers = [];
+  const box = $("#orns"); box.className = "";
+  box.innerHTML = SPOTS.map(([x, y], i) => `<button class="orn" style="left:${x}%;top:${y}%;--c:${COLS[i][0]};--c2:${COLS[i][1]};animation-delay:${-i * .8}s" aria-label="Christbaumkugel ${i + 1}"><span class="cap"></span><span class="ball"></span><span class="lbl"></span></button>`).join("");
+  $("#tag").classList.remove("show", "done");
+  $("#hint").textContent = "Welche Kugel nimmst du?";
+}
+function pickOrn(btn) {
+  const box = $("#orns");
+  if (box.classList.contains("picked")) return;
+  box.classList.add("picked");
+  const rest = N.map((_, i) => i).filter(i => i !== cur.g && i !== partner(cur.g) && i !== cur.t).sort(() => Math.random() - .5);
+  const others = [...box.querySelectorAll(".orn")].filter(o => o !== btn);
+  btn.querySelector(".lbl").textContent = N[cur.t];
+  others.forEach((o, i) => { o.querySelector(".lbl").textContent = N[rest[i]]; });
+  $("#hint").textContent = "";
+  btn.classList.add("shake");
+  later(() => {
+    btn.classList.remove("shake"); btn.classList.add("pop"); burst(btn); WL.call("markDrawn", slug(N[cur.g]), dname(cur.d)); others.forEach(o => o.classList.add("other"));
+    $("#who").textContent = N[cur.t];
+    later(() => { const t = $("#tag"); t.classList.add("show", "done"); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }, 500);
+    later(() => others.forEach((o, i) => later(() => o.classList.add("reveal"), i * 250)), 2200);
+  }, reduce ? 0 : 800);
+}
+function bindReveal() {
+  $("#orns").addEventListener("click", e => { const b = e.target.closest(".orn"); if (b) pickOrn(b); });
+  $("#close").addEventListener("click", () => { buildOrns(); scrollTo({ top: 0, behavior: "smooth" }); });
+}
+
+/* ---- Routing ---- */
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  ["#reveal", "#admin", "#bad"].forEach(s => $(s).classList.add("hidden"));
+  $("#live").classList.toggle("hidden", !!h && !decode(h));
+  if (!h) { $("#admin").classList.remove("hidden"); state = state || load(); renderAdmin(); return; }
+  const x = decode(h);
+  if (!x) { $("#bad").classList.remove("hidden"); return; }
+  $("#reveal").classList.remove("hidden"); showReveal(x); buildOrns();
+}
+
+/* ---- Deko ---- */
+{
+  const cols = ["#ff4a3d", "#ffd45e", "#5be37d", "#5ab8ff", "#fff3c4"];
+  let g = "", lights = "", bows = "", k = 0;
+  for (let i = 0; i < 6; i++) {
+    const x0 = i * 200 - 100, x1 = x0 + 200, mx = x0 + 100;
+    const P = t => [(1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, (1 - t) * (1 - t) * 10 + 2 * (1 - t) * t * 70 + t * t * 10];
+    for (let j = 0; j <= 60; j++) {
+      const [x, y] = P(j / 60);
+      for (let n = 0; n < 3; n++) { const a = Math.random() * 6.28, l = 7 + Math.random() * 8; g += `<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${(x + Math.cos(a) * l).toFixed(1)}" y2="${(y + Math.sin(a) * l).toFixed(1)}" stroke="${["#1f6b45", "#2f8a5a", "#164d33"][n]}" stroke-width="3" stroke-linecap="round"/>`; }
+    }
+    [.18, .38, .58, .8].forEach(t => { const [x, y] = P(t); const c = cols[k++ % 5]; lights += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y + 7}" stroke="#333" stroke-width="2"/><ellipse class="bulb" style="animation-delay:${(Math.random() * 1.6).toFixed(2)}s" cx="${x}" cy="${y + 14}" rx="5" ry="8" fill="${c}" filter="url(#bg)"/>`; });
+    bows += `<g transform="translate(${x1} 12)"><path d="M0 0 C-18 -14 -22 6 0 0 C18 -14 22 6 0 0Z" fill="#c8312b"/><path d="M0 0 L-8 22 M0 0 L8 22" stroke="#c8312b" stroke-width="5"/><circle r="4" fill="#e8b94a"/></g>`;
+  }
+  document.getElementById("garland").innerHTML = `<svg viewBox="0 0 1000 90" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><defs><filter id="bg" x="-2" y="-2" width="5" height="5"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${g}${lights}${bows}</svg>`;
+  const bb = [[105, 112, "#c8312b"], [158, 104, "#e8b94a"], [130, 160, "#5ab8ff"], [85, 180, "#e8b94a"], [178, 172, "#c8312b"], [70, 238, "#5ab8ff"], [120, 222, "#c8312b"], [168, 246, "#e8b94a"], [205, 230, "#fbf7ee"], [52, 214, "#fbf7ee"], [140, 78, "#fbf7ee"]];
+  document.querySelectorAll(".baubles").forEach(el => el.innerHTML = bb.map(([x, y, c]) => `<circle cx="${x}" cy="${y}" r="8" fill="${c}"/><circle cx="${x - 2.5}" cy="${y - 2.5}" r="2.5" fill="#fff" opacity=".6"/>`).join(""));
+}
+
+/* ---- Schnee & Funkeln ---- */
+const cv = $("#snow"), cx = cv.getContext("2d");
+let flakes = [], sparks = [], W = 0, H = 0;
+const size = () => { const dpr = devicePixelRatio || 1; W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+const ro = new ResizeObserver(size); ro.observe(document.body);
+size();
+for (let i = 0; i < 130; i++) flakes.push({ x: Math.random() * W, y: Math.random() * H, r: 1 + Math.random() * 3.2, s: .3 + Math.random() * .9, w: Math.random() * 6 });
+function burst(el) {
+  const b = (el || $("#tag")).getBoundingClientRect(), ox = b.left + b.width / 2, oy = b.top + b.height / 2;
+  const cc = ["#e8b94a", "#ffd45e", "#fff", "#ff4a3d", "#5be37d", "#5ab8ff"];
+  for (let i = 0; i < 160; i++) { const a = Math.random() * Math.PI * 2, v = 3 + Math.random() * 8; sparks.push({ x: ox, y: oy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 5, l: 80 + Math.random() * 60, c: cc[i % cc.length], w: 3 + Math.random() * 4, rot: Math.random() * 6 }); }
+}
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function tick(t) {
+  cx.clearRect(0, 0, W, H);
+  cx.fillStyle = "rgba(255,255,255,.85)";
+  for (const f of flakes) {
+    f.y += f.s; f.x += Math.sin(t / 1400 + f.w) * .35;
+    if (f.y > H + 5) { f.y = -5; f.x = Math.random() * W; }
+    cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 7); cx.fill();
+  }
+  sparks = sparks.filter(p => p.l-- > 0);
+  for (const p of sparks) { p.x += p.vx; p.y += p.vy; p.vy += .12; cx.globalAlpha = Math.min(1, p.l / 40); cx.fillStyle = p.c; p.vx *= .985; p.rot += .2; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.fillRect(-(p.w||3) / 2, -1.5, p.w || 3, 3); cx.restore(); }
+  cx.globalAlpha = 1;
+  requestAnimationFrame(tick);
+}
+if (!still) requestAnimationFrame(tick);
+
+bindAdmin(); bindReveal();
+addEventListener("hashchange", route);
+route();
+}
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, collection, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const W = window.wichtel;
+try {
+  const app = initializeApp({
+    apiKey: "AIzaSyDOZe55OnHU2zeYlmE09Q67me4WIT-Xtcg",
+    authDomain: "christmas-33b3e.firebaseapp.com",
+    projectId: "christmas-33b3e",
+    storageBucket: "christmas-33b3e.firebasestorage.app",
+    messagingSenderId: "1038766089302",
+    appId: "1:1038766089302:web:8b990d9971e1c1aa68c7f7"
+  });
+  const db = getFirestore(app);
+  let drawId = null, status = {}, gotDraw = false, gotStatus = false;
+  const push = () => { if (gotDraw && gotStatus) W.renderStatus(status, drawId); };
+  onSnapshot(doc(db, "wichteln", "draw"), s => { gotDraw = true; drawId = s.exists() ? s.data().id : null; push(); }, W.liveError);
+  onSnapshot(collection(db, "status"), qs => { gotStatus = true; status = {}; qs.forEach(d => status[d.id] = d.data()); push(); }, W.liveError);
+  W.markDrawn_ = (who, d) => { if (status[who] && status[who].d === d) return; setDoc(doc(db, "status", who), { d, at: serverTimestamp() }).catch(W.liveError); };
+  W.setDraw_ = id => setDoc(doc(db, "wichteln", "draw"), { id, at: serverTimestamp() }).catch(W.liveError);
+  W.ready();
+} catch (e) { W.liveError(e); }
+</script>
+</body>
+</html>
